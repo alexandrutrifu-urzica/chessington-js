@@ -7,9 +7,17 @@ export default class Board {
     public currentPlayer: Player;
     private readonly board: (Piece | undefined)[][];
 
-    public constructor() {
-        this.currentPlayer = Player.WHITE;
+    constructor(currentPlayer: Player) {
+        this.currentPlayer = currentPlayer ? currentPlayer : Player.WHITE;
         this.board = this.createBoard();
+    }
+
+    createBoard() {
+        const board = new Array(GameSettings.BOARD_SIZE);
+        for (let i = 0; i < board.length; i++) {
+            board[i] = new Array(GameSettings.BOARD_SIZE);
+        }
+        return board;
     }
 
     public setPiece(square: Square, piece: Piece | undefined) {
@@ -38,13 +46,5 @@ export default class Board {
             this.setPiece(fromSquare, undefined);
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
         }
-    }
-
-    private createBoard() {
-        const board = new Array(GameSettings.BOARD_SIZE);
-        for (let i = 0; i < board.length; i++) {
-            board[i] = new Array(GameSettings.BOARD_SIZE);
-        }
-        return board;
     }
 }
