@@ -21,7 +21,8 @@ export default class Knight extends Piece {
             let rowIndex = currentSquare.row + rowAdjustments[index]
             let colIndex = currentSquare.col + colAdjustments[index]
 
-            if (this.isValidMove(rowIndex, colIndex, board)) {
+            if (this.isValidMove(rowIndex, colIndex, board) ||
+            this.isBlockedByOpponent(rowIndex, colIndex, board)) {
                 availableMoves.push(new Square(rowIndex, colIndex))
             }
         }
