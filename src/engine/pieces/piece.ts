@@ -1,15 +1,34 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import {PieceType} from "./pieceType";
 
 export default class Piece {
     public player: Player;
+    public type: PieceType | undefined
+
     isValidIndex = (index: number) => (0 <= index) && (index < 8)
+
     isValidMove = (row: number, col: number, board: Board) =>
         this.isValidIndex(row) && this.isValidIndex(col) && board.getPiece(Square.at(row, col)) === undefined
 
+    isBlockedByOpponent = (row: number, col: number, board: Board) => {
+        if (!this.isValidIndex(row) || !this.isValidIndex(col)) {
+            return false
+        }
+
+        let blockedSquare = new Square(row, col)
+        let blockingPiece = board.getPiece(blockedSquare)
+
+        return blockingPiece !== undefined &&
+            blockingPiece.player !== this.player &&
+            blockingPiece.type !== PieceType.King
+    }
+
+
     public constructor(player: Player) {
         this.player = player;
+        this.type = undefined
     }
 
     public getAvailableMoves(board: Board) {
@@ -32,12 +51,22 @@ export default class Piece {
             index--
         }
 
+        // Check if the current piece was blocked by an opponent
+        if (this.isBlockedByOpponent(currentSquare.row, index, board)) {
+            availableMoves.push(new Square(currentSquare.row, index))
+        }
+
         // Right movement
         index = currentSquare.col + 1
 
         while (this.isValidMove(currentSquare.row, index, board)) {
             availableMoves.push(new Square(currentSquare.row, index))
             index++
+        }
+
+        // Check if the current piece was blocked by an opponent
+        if (this.isBlockedByOpponent(currentSquare.row, index, board)) {
+            availableMoves.push(new Square(currentSquare.row, index))
         }
 
         return availableMoves
@@ -54,12 +83,21 @@ export default class Piece {
             index++
         }
 
+        // Check if the current piece was blocked by an opponent
+        if (this.isBlockedByOpponent(index, currentSquare.col, board)) {
+            availableMoves.push(new Square(index, currentSquare.col))
+        }
+
         // Down movement
         index = currentSquare.row - 1
 
         while (this.isValidMove(index, currentSquare.col, board)) {
             availableMoves.push(new Square(index, currentSquare.col))
             index--
+        }
+
+        if (this.isBlockedByOpponent(index, currentSquare.col, board)) {
+            availableMoves.push(new Square(index, currentSquare.col))
         }
 
         return availableMoves
@@ -80,6 +118,10 @@ export default class Piece {
 
                     rowIndex += rowAdjustment
                     colIndex += colAdjustment
+                }
+
+                if (this.isBlockedByOpponent(rowIndex, colIndex, board)) {
+                    availableMoves.push(new Square(rowIndex, colIndex))
                 }
             }
         }
