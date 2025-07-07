@@ -20,10 +20,10 @@ export default class Pawn extends Piece {
         let colIndex = currentSquare.col
         let rowAdjustment = this.player == Player.WHITE ? 1 : -1
 
-        if (this.isValidMove(rowIndex + rowAdjustment, colIndex, board)) {
+        if (this.isNotBlocked(rowIndex + rowAdjustment, colIndex, board)) {
             availableMoves.push(new Square(rowIndex + rowAdjustment, colIndex))
 
-            if (this.firstMove && this.isValidMove(rowIndex + 2 * rowAdjustment, colIndex, board)) {
+            if (this.firstMove && this.isNotBlocked(rowIndex + 2 * rowAdjustment, colIndex, board)) {
                 availableMoves.push(new Square(rowIndex + 2 * rowAdjustment, colIndex))
             }
         }

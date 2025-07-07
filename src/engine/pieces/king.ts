@@ -24,7 +24,8 @@ export default class King extends Piece {
                 let rowIndex = currentSquare.row + rowAdjustment
                 let colIndex = currentSquare.col + colAdjustment
 
-                if (this.isValidMove(rowIndex, colIndex, board)) {
+                if (this.isNotBlocked(rowIndex, colIndex, board) ||
+                this.isBlockedByOpponent(rowIndex, colIndex, board)) {
                     availableMoves.push(new Square(rowIndex, colIndex))
                 }
             }

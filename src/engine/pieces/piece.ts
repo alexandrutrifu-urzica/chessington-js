@@ -9,7 +9,7 @@ export default class Piece {
 
     isValidIndex = (index: number) => (0 <= index) && (index < 8)
 
-    isValidMove = (row: number, col: number, board: Board) =>
+    isNotBlocked = (row: number, col: number, board: Board) =>
         this.isValidIndex(row) && this.isValidIndex(col) && board.getPiece(Square.at(row, col)) === undefined
 
     isBlockedByOpponent = (row: number, col: number, board: Board) => {
@@ -46,7 +46,7 @@ export default class Piece {
         // Left movement
         let index = currentSquare.col - 1
 
-        while (this.isValidMove(currentSquare.row, index, board)) {
+        while (this.isNotBlocked(currentSquare.row, index, board)) {
             availableMoves.push(new Square(currentSquare.row, index))
             index--
         }
@@ -59,7 +59,7 @@ export default class Piece {
         // Right movement
         index = currentSquare.col + 1
 
-        while (this.isValidMove(currentSquare.row, index, board)) {
+        while (this.isNotBlocked(currentSquare.row, index, board)) {
             availableMoves.push(new Square(currentSquare.row, index))
             index++
         }
@@ -78,7 +78,7 @@ export default class Piece {
         // Up movement
         let index = currentSquare.row + 1
 
-        while (this.isValidMove(index, currentSquare.col, board)) {
+        while (this.isNotBlocked(index, currentSquare.col, board)) {
             availableMoves.push(new Square(index, currentSquare.col))
             index++
         }
@@ -91,7 +91,7 @@ export default class Piece {
         // Down movement
         index = currentSquare.row - 1
 
-        while (this.isValidMove(index, currentSquare.col, board)) {
+        while (this.isNotBlocked(index, currentSquare.col, board)) {
             availableMoves.push(new Square(index, currentSquare.col))
             index--
         }
@@ -113,7 +113,7 @@ export default class Piece {
                 let rowIndex = currentSquare.row + rowAdjustment
                 let colIndex = currentSquare.col + colAdjustment
 
-                while (this.isValidMove(rowIndex, colIndex, board)) {
+                while (this.isNotBlocked(rowIndex, colIndex, board)) {
                     availableMoves.push(new Square(rowIndex, colIndex))
 
                     rowIndex += rowAdjustment
