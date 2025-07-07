@@ -4,6 +4,7 @@ import Square from '../square';
 
 export default class Piece {
     public player: Player;
+    isValidIndex = (index: number) => (0 <= index) && (index < 8)
 
     public constructor(player: Player) {
         this.player = player;
@@ -46,14 +47,13 @@ export default class Piece {
         let availableMoves: Square[] = []
 
         const directions = [-1, 1]
-        const isValidIndex = (index: number) => (0 <= index) && (index < 8)
 
         for (let rowAdjustment of directions) {
             for (let colAdjustment of directions) {
                 let rowIndex = currentSquare.row + rowAdjustment
                 let colIndex = currentSquare.col + colAdjustment
 
-                while (isValidIndex(rowIndex) && isValidIndex(colIndex)) {
+                while (this.isValidIndex(rowIndex) && this.isValidIndex(colIndex)) {
                     availableMoves.push(new Square(rowIndex, colIndex))
 
                     rowIndex += rowAdjustment
