@@ -12,17 +12,9 @@ export default class Rook extends Piece {
         let availableMoves: Square[] = []
         let currentSquare = board.findPiece(this)
 
-        for (let index = 0; index < 8; index++) {
-            // Horizontal moves
-            if (index != currentSquare.col) {
-                availableMoves.push(new Square(currentSquare.row, index))
-            }
-
-            // Vertical moves
-            if (index != currentSquare.row) {
-                availableMoves.push(new Square(index, currentSquare.col))
-            }
-        }
+        availableMoves = availableMoves
+            .concat(this.getHorizontalMoves(currentSquare))
+            .concat(this.getVerticalMoves(currentSquare))
 
         return availableMoves
     }
