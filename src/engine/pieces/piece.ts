@@ -24,10 +24,20 @@ export default class Piece {
     public getHorizontalMoves(currentSquare: Square, board: Board) {
         let availableMoves: Square[] = []
 
-        for (let index = 0; index < 8; index++) {
-            if (this.isValidMove(currentSquare.row, index, board)) {
-                availableMoves.push(new Square(currentSquare.row, index))
-            }
+        // Left movement
+        let index = currentSquare.col - 1
+
+        while (this.isValidMove(currentSquare.row, index, board)) {
+            availableMoves.push(new Square(currentSquare.row, index))
+            index--
+        }
+
+        // Right movement
+        index = currentSquare.col + 1
+
+        while (this.isValidMove(currentSquare.row, index, board)) {
+            availableMoves.push(new Square(currentSquare.row, index))
+            index++
         }
 
         return availableMoves
@@ -36,10 +46,20 @@ export default class Piece {
     public getVerticalMoves(currentSquare: Square, board: Board) {
         let availableMoves: Square[] = []
 
-        for (let index = 0; index < 8; index++) {
-            if (this.isValidMove(index, currentSquare.col, board)) {
-                availableMoves.push(new Square(index, currentSquare.col))
-            }
+        // Up movement
+        let index = currentSquare.row + 1
+
+        while (this.isValidMove(index, currentSquare.col, board)) {
+            availableMoves.push(new Square(index, currentSquare.col))
+            index++
+        }
+
+        // Down movement
+        index = currentSquare.row - 1
+
+        while (this.isValidMove(index, currentSquare.col, board)) {
+            availableMoves.push(new Square(index, currentSquare.col))
+            index--
         }
 
         return availableMoves
