@@ -14,17 +14,15 @@ export default class Pawn extends Piece {
         let availableMoves: Square[] = []
         let currentSquare = board.findPiece(this)
 
-        if (this.player == Player.WHITE) {
-            availableMoves.push(new Square(currentSquare.row + 1, currentSquare.col))
+        let rowIndex = currentSquare.row
+        let colIndex = currentSquare.col
+        let rowAdjustment = this.player == Player.WHITE ? 1 : -1
 
-            if (this.firstMove) {
-                availableMoves.push(new Square(currentSquare.row + 2, currentSquare.col))
-            }
-        } else {
-            availableMoves.push(new Square(currentSquare.row - 1, currentSquare.col))
+        if (this.isValidMove(rowIndex + rowAdjustment, colIndex, board)) {
+            availableMoves.push(new Square(rowIndex + rowAdjustment, colIndex))
 
-            if (this.firstMove) {
-                availableMoves.push(new Square(currentSquare.row - 2, currentSquare.col))
+            if (this.firstMove && this.isValidMove(rowIndex + 2 * rowAdjustment, colIndex, board)) {
+                availableMoves.push(new Square(rowIndex + 2 * rowAdjustment, colIndex))
             }
         }
 

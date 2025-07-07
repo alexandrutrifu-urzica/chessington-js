@@ -13,8 +13,8 @@ export default class Rook extends Piece {
         let currentSquare = board.findPiece(this)
 
         availableMoves = availableMoves
-            .concat(this.getHorizontalMoves(currentSquare))
-            .concat(this.getVerticalMoves(currentSquare))
+            .concat(this.getHorizontalMoves(currentSquare, board))
+            .concat(this.getVerticalMoves(currentSquare, board))
 
         return availableMoves
     }

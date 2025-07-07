@@ -13,9 +13,9 @@ export default class Queen extends Piece {
         let currentSquare = board.findPiece(this)
 
         availableMoves = availableMoves
-            .concat(this.getHorizontalMoves(currentSquare))
-            .concat(this.getVerticalMoves(currentSquare))
-            .concat(this.getDiagonalMoves(currentSquare))
+            .concat(this.getHorizontalMoves(currentSquare, board))
+            .concat(this.getVerticalMoves(currentSquare, board))
+            .concat(this.getDiagonalMoves(currentSquare, board))
 
         return availableMoves
     }

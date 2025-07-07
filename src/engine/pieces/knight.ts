@@ -19,7 +19,7 @@ export default class Knight extends Piece {
             let rowIndex = currentSquare.row + rowAdjustments[index]
             let colIndex = currentSquare.col + colAdjustments[index]
 
-            if (this.isValidIndex(rowIndex) && this.isValidIndex(colIndex)) {
+            if (this.isValidMove(rowIndex, colIndex, board)) {
                 availableMoves.push(new Square(rowIndex, colIndex))
             }
         }

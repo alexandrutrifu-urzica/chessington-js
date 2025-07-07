@@ -22,7 +22,7 @@ export default class King extends Piece {
                 let rowIndex = currentSquare.row + rowAdjustment
                 let colIndex = currentSquare.col + colAdjustment
 
-                if (this.isValidIndex(rowIndex) && this.isValidIndex(colIndex)) {
+                if (this.isValidMove(rowIndex, colIndex, board)) {
                     availableMoves.push(new Square(rowIndex, colIndex))
                 }
             }
