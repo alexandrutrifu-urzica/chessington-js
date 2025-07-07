@@ -1,13 +1,23 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
+import Square from "../square";
+import {PieceType} from "./pieceType";
 
 export default class Rook extends Piece {
     public constructor(player: Player) {
         super(player);
+        this.type = PieceType.Rook
     }
 
     public getAvailableMoves(board: Board) {
-        return new Array(0);
+        let availableMoves: Square[] = []
+        let currentSquare = board.findPiece(this)
+
+        availableMoves = availableMoves
+            .concat(this.getHorizontalMoves(currentSquare, board))
+            .concat(this.getVerticalMoves(currentSquare, board))
+
+        return availableMoves
     }
 }
