@@ -37,7 +37,7 @@ describe('Pawn', () => {
 
     describe('black pawns', () => {
 
-        let board;
+        let board: Board;
         beforeEach(() => board = new Board(Player.BLACK));    
         
         it('can only move one square down if they have already moved', () => {
@@ -74,7 +74,7 @@ describe('Pawn', () => {
         moves.should.be.empty;
     });
 
-    it('cannot move two squares if there is a piece two sqaures in front', () => {
+    it('cannot move two squares if there is a piece two squares in front', () => {
         const pawn = new Pawn(Player.BLACK);
         const blockingPiece = new Rook(Player.WHITE);
         board.setPiece(Square.at(6, 3), pawn);
