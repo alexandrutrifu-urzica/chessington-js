@@ -18,14 +18,24 @@ export default class Pawn extends Piece {
 
         let rowIndex = currentSquare.row
         let colIndex = currentSquare.col
-        let rowAdjustment = this.player == Player.WHITE ? 1 : -1
+        let indexAdjustment = this.player == Player.WHITE ? 1 : -1
 
-        if (this.isNotBlocked(rowIndex + rowAdjustment, colIndex, board)) {
-            availableMoves.push(new Square(rowIndex + rowAdjustment, colIndex))
+        // Straight movement
+        if (this.isNotBlocked(rowIndex + indexAdjustment, colIndex, board)) {
+            availableMoves.push(new Square(rowIndex + indexAdjustment, colIndex))
 
-            if (this.firstMove && this.isNotBlocked(rowIndex + 2 * rowAdjustment, colIndex, board)) {
-                availableMoves.push(new Square(rowIndex + 2 * rowAdjustment, colIndex))
+            if (this.firstMove && this.isNotBlocked(rowIndex + 2 * indexAdjustment, colIndex, board)) {
+                availableMoves.push(new Square(rowIndex + 2 * indexAdjustment, colIndex))
             }
+        }
+
+        // Diagonal movement for capturing enemy pieces
+        if (this.isBlockedByOpponent(rowIndex + indexAdjustment, colIndex + 1, board)) {
+            availableMoves.push(new Square(rowIndex + indexAdjustment, colIndex + 1))
+        }
+
+        if (this.isBlockedByOpponent(rowIndex + indexAdjustment, colIndex - 1, board)) {
+            availableMoves.push(new Square(rowIndex + indexAdjustment, colIndex - 1))
         }
 
         return availableMoves
